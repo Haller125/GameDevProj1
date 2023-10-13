@@ -21,7 +21,7 @@ class MainMenu:
                     return "QUIT"
         return None
 
-    def update(self):
+    def update(self,screen):
         if self.StartButton.hover(pygame.mouse.get_pos()):
             self.StartButton.color = colors.BRIGHT_GREEN
         elif self.QuitButton.hover(pygame.mouse.get_pos()):

@@ -11,21 +11,11 @@ class GamePlay:
         self.min_y = 0
         self.max_x = 800
         self.max_y = 600
-        self.obstacles = [(200, 200), (250, 250), (300, 300)]
 
     def process_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "QUIT"
-            # elif event.type == pygame.KEYDOWN:  # Check for key presses
-            # if event.key == pygame.K_LEFT:
-            #     self.Player.move(-1, 0)
-            # if event.key == pygame.K_RIGHT:
-            #     self.Player.move(1, 0)
-            # if event.key == pygame.K_UP:
-            #     self.Player.move(0, -1)
-            # if event.key == pygame.K_DOWN:
-            #     self.Player.move(0, 1)
         return None
 
     def update(self, screen):
@@ -44,11 +34,9 @@ class GamePlay:
             self.Player.draw_death(screen)
             return self.Player.die()
 
-        self.Player.move(x, y, self.obstacles)
+        self.Player.move(x, y)
 
     def render(self, screen):
         screen.fill((0, 0, 0))
         pygame.draw.rect(screen, colors.GREY, (0, 0, 800, 600), 10)
-        for obstacle in self.obstacles:
-            pygame.draw.rect(screen, colors.RED, (*obstacle, 32, 32))
         self.Player.draw(screen)

@@ -15,16 +15,16 @@ class MainMenu:
             if event.type == pygame.QUIT:
                 return "QUIT"
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.StartButton.hover(pygame.mouse.get_pos()):
+                if self.StartButton.is_hover(pygame.mouse.get_pos()):
                     return "GAMEPLAY"
-                elif self.QuitButton.hover(pygame.mouse.get_pos()):
+                elif self.QuitButton.is_hover(pygame.mouse.get_pos()):
                     return "QUIT"
         return None
 
     def update(self,screen):
-        if self.StartButton.hover(pygame.mouse.get_pos()):
+        if self.StartButton.is_hover(pygame.mouse.get_pos()):
             self.StartButton.color = colors.BRIGHT_GREEN
-        elif self.QuitButton.hover(pygame.mouse.get_pos()):
+        elif self.QuitButton.is_hover(pygame.mouse.get_pos()):
             self.QuitButton.color = colors.BRIGHT_RED
         else:
             self.StartButton.color = colors.GREEN

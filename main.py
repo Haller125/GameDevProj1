@@ -21,8 +21,8 @@ class Game:
             elif result == "GAMEPLAY":
                 print("Switching to gameplay scene")
                 self.scene = GamePlay(self)
-            
-            elif self.scene.update(self.screen) == "DEATH":
+
+            elif result == "DEATH":
                 print("Switching to death screen")             
                 self.scene = DeathScreen(self)
             self.clock.tick(60)

@@ -11,11 +11,14 @@ class GamePlay:
         self.min_y = 0
         self.max_x = 800
         self.max_y = 600
+        self.is_Player_dead = False
 
     def process_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "QUIT"
+            elif self.is_Player_dead:
+                return "DEATH"
         return None
 
     def update(self, screen):
@@ -32,7 +35,8 @@ class GamePlay:
 
         if self.Player.border_death(self.max_x, self.max_y, self.min_x, self.min_y):
             self.Player.draw_death(screen)
-            return self.Player.die()
+            self.is_Player_dead = True
+            return
 
         self.Player.move(x, y)
 

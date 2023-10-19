@@ -20,9 +20,7 @@ class Player(BaseEntity):
         self.y += self.speed * dy
 
     def border_death(self, max_x, max_y, min_x, min_y):
-        if self.x >= max_x - 32 or self.y >= max_y - 32:
-            return True
-        elif self.x <= min_x or self.y <= min_y:
+        if self.x >= max_x - 32 or self.y >= max_y - 32 or self.x <= min_x or self.y <= min_y:
             return True
 
     def attack(self, target):

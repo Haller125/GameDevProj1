@@ -14,7 +14,7 @@ class Button:
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height))
 
     # pos is the mouse position or a tuple of (x,y) coordinates
-    def hover(self, pos):
+    def is_hover(self, pos):
         if self.x < pos[0] < self.x + self.width and self.y < pos[1] < self.y + self.height:
             return True
         return False

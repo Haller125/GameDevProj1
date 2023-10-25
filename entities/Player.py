@@ -11,6 +11,7 @@ class Player(BaseEntity):
         self.startFrame = 0
         self.framerate = 1200
         self.change_color_start_time = pygame.time.get_ticks()
+        self.width, self.height = 32, 32
 
     # -1 <= dx <= 1 and -1 <= dy <= 1
     def move(self, dx, dy):

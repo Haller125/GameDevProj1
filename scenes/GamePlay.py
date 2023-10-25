@@ -9,8 +9,8 @@ class GamePlay:
         self.Player = Player(x=400, y=300)
         self.min_x = 0
         self.min_y = 0
-        self.max_x = 800
-        self.max_y = 600
+        self.max_x = game.width
+        self.max_y = game.height
         self.is_Player_dead = False
 
     def process_events(self):
@@ -42,5 +42,5 @@ class GamePlay:
 
     def render(self, screen):
         screen.fill((0, 0, 0))
-        pygame.draw.rect(screen, colors.GREY, (0, 0, 800, 600), 10)
+        pygame.draw.rect(screen, colors.GREY, (0, 0, self.game.width, self.game.height), 10)
         self.Player.draw(screen)

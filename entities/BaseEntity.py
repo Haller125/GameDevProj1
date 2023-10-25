@@ -2,7 +2,7 @@ import pygame
 from colors import WHITE
 
 class BaseEntity:
-    def __init__(self, x=0, y=0, health=100, speed=5, image=pygame.Surface((32, 32))):
+    def __init__(self, x=100, y=100, health=100, speed=5, image=pygame.Surface((32, 32))):
         self.x = x
         self.y = y
         self.health = health

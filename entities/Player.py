@@ -1,8 +1,5 @@
 from entities.BaseEntity import BaseEntity
 import pygame
-import modules.Button as Button
-import colors as colors
-from scenes.MainMenu import MainMenu
 
 
 class Player(BaseEntity):
@@ -12,6 +9,8 @@ class Player(BaseEntity):
         self.framerate = 1200
         self.change_color_start_time = pygame.time.get_ticks()
         self.width, self.height = 32, 32
+        self.attack_range = 50
+        self.melee_damage = 10
 
     # -1 <= dx <= 1 and -1 <= dy <= 1
     def move(self, dx, dy):
@@ -27,6 +26,14 @@ class Player(BaseEntity):
     def attack(self, target):
         # Logic for attacking a target
         pass
+
+    def melee_attack(self, target):
+        distance = self.distance_to(target)
+        if distance <= self.attack_range:
+            target.take_damage(self.melee_damage)  # Adjust the damage value as needed
+
+    def distance_to(self, target):
+        return ((self.x - target.x) ** 2 + (self.y - target.y) ** 2) ** 0.5
 
     def take_damage(self, amount):
         self.health -= amount

@@ -38,7 +38,8 @@ class Player(BaseEntity):
         return "DEATH"
 
     def draw(self, screen):
-        screen.blit(self.image, (self.x, self.y))
+        screen.blit(self.image, ( max(min((self.x - (self.width * 0.5 - 1)), screen.get_width()), 0),
+                                  max(min((self.y - (self.height * 0.5 - 2)), screen.get_height()), 0 )))
 
     def draw_death(self, screen):
         self.runTime = True

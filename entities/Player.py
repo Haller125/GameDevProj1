@@ -1,10 +1,14 @@
-from entities.BaseEntity import BaseEntity
+from colors import WHITE
+
 import pygame
 
-
-class Player(BaseEntity):
-    def __init__(self, x, y, health=100, speed=5):
-        super().__init__(x, y, health, speed)
+class Player:
+    def __init__(self, x, y, health=100, speed=5, image=pygame.Surface((32, 32))):
+        image.fill(WHITE)
+        self.image = image
+        self.x, self.y = x, y
+        self.health = health
+        self.speed = speed
         self.startFrame = 0
         self.framerate = 1200
         self.change_color_start_time = pygame.time.get_ticks()
@@ -30,6 +34,7 @@ class Player(BaseEntity):
     def melee_attack(self, target):
         distance = self.distance_to(target)
         if distance <= self.attack_range:
+            print("Attacking")
             target.take_damage(self.melee_damage)  # Adjust the damage value as needed
 
     def distance_to(self, target):

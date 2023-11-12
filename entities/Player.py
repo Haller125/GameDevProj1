@@ -25,7 +25,7 @@ class Player:
         self.melee_attack_cooldown = 500
         # Dash
         self.dash_start = 0
-        self.dash_lock_time = 300
+        self.dash_lock_time = 100
         self.dash_cooldown = 500
         self.last_dx = 0
         self.last_dy = 0
@@ -33,12 +33,15 @@ class Player:
     # -1 <= dx <= 1 and -1 <= dy <= 1
     def move(self, dx, dy, speed=None):
         delta = speed if speed is not None else self.speed
-        self.last_dx, self.last_dy = dx, dy
         if self.state not in (DASHING, DYING, ATTACKING):
-            dx = max(min(dx, 1), -1)
-            dy = max(min(dy, 1), -1)
-            self.x += delta * dx
-            self.y += delta * dy
+            self.change_position(dx, dy, delta)
+
+    def change_position(self, dx, dy, delta):
+        self.last_dx, self.last_dy = dx, dy
+        dx = max(min(dx, 1), -1)
+        dy = max(min(dy, 1), -1)
+        self.x += delta * dx
+        self.y += delta * dy
 
     def melee_attack(self, target):
         current_time = pygame.time.get_ticks()
@@ -85,11 +88,15 @@ class Player:
             pass
 
         elif self.state == DASHING:
+            print("Dashing")
+            self.change_position(self.last_dx, self.last_dy, self.speed * 3)
+            print(self.last_dx, self.last_dy, self.speed * 3)
             if current_time - self.dash_start > self.dash_lock_time:  # Duration of the dash
                 self.state = IDLE
 
         elif self.state == ATTACKING:
-            if current_time - self.melee_attack_start >= self.melee_attack_lock_time:  # Duration of the attack animation or effect
+            # Duration of the attack animation or effect
+            if current_time - self.melee_attack_start >= self.melee_attack_lock_time:
                 self.state = IDLE
 
     def draw_death(self, screen):

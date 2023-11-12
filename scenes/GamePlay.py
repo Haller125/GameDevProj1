@@ -35,17 +35,19 @@ class GamePlay:
 
         keys = pygame.key.get_pressed()
         x, y = 0, 0
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_a]:
             x += -1
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             x += 1
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_w]:
             y += -1
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_s]:
             y += 1
-
         self.Player.move(x, y)
         self.Player.update()
+
+        if keys[pygame.K_SPACE]:
+            self.Player.dash()
 
     def render(self, screen):
         screen.fill((0, 0, 0))

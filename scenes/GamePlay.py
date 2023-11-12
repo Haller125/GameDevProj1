@@ -45,6 +45,7 @@ class GamePlay:
             y += 1
 
         self.Player.move(x, y)
+        self.Player.update()
 
     def render(self, screen):
         screen.fill((0, 0, 0))

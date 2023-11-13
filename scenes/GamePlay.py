@@ -8,7 +8,7 @@ class GamePlay:
     def __init__(self, game):
         self.game = game
         self.Player = Player(x=400, y=300)
-        self.Dummy = Dummy(x=200, y=200)
+        self.Enemy = Dummy(x=200, y=200)
         self.min_x = 0
         self.min_y = 0
         self.max_x = game.width
@@ -23,8 +23,12 @@ class GamePlay:
                 return "DEATH"
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
-                    self.Player.melee_attack(self.Dummy)
+                    self.Player.melee_attack(self.Enemy)
                     return None
+                if event.button == 3:
+                    self.Player.ranged_attack(self.Enemy)
+                    return None
+
         return None
 
     def update(self, screen):
@@ -45,12 +49,11 @@ class GamePlay:
             y += 1
         self.Player.move(x, y)
         self.Player.update()
+        self.Enemy.update()
 
-        if keys[pygame.K_SPACE]:
-            self.Player.dash()
 
     def render(self, screen):
         screen.fill((0, 0, 0))
         pygame.draw.rect(screen, colors.GREY, (0, 0, self.game.width, self.game.height), 10)
         self.Player.draw(screen)
-        self.Dummy.draw(screen)
+        self.Enemy.draw(screen)

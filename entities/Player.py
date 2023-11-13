@@ -1,6 +1,8 @@
 from colors import WHITE
 
 import pygame
+
+from entities.Arrow import Arrow
 from entities.State import *
 
 class Player:
@@ -29,6 +31,10 @@ class Player:
         self.dash_cooldown = 500
         self.last_dx = 0
         self.last_dy = 0
+        # Range attack
+        self.arrows = []
+        self.range_attack_start = 0
+        self.range_attack_cooldown = 500
 
     # -1 <= dx <= 1 and -1 <= dy <= 1
     def move(self, dx, dy, speed=None):
@@ -51,7 +57,12 @@ class Player:
             distance = self.distance_to(target)
             if distance <= self.attack_range:
                 print("Attacking")
-                target.take_damage(self.melee_damage)  # Adjust the damage value as needed
+                   # Adjust the damage value as needed
+
+    def ranged_attack(self, target):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.range_attack_start >= self.range_attack_cooldown:
+            self.arrows.append(Arrow(self.x, self.y, target))
 
     def dash(self):
         current_time = pygame.time.get_ticks()
@@ -78,9 +89,14 @@ class Player:
     def draw(self, screen):
         screen.blit(self.image, ( max(min((self.x - (self.width * 0.5 - 1)), screen.get_width()), 0),
                                   max(min((self.y - (self.height * 0.5 - 2)), screen.get_height()), 0 )))
+        for arrow in self.arrows:
+            arrow.draw(screen)
 
     def update(self):
         current_time = pygame.time.get_ticks()
+
+        for arrow in self.arrows:
+            arrow.update()
 
         if self.state == DYING:
             # if current_time - self.death_time > self.framerate:

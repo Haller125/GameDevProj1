@@ -22,7 +22,9 @@ class Arrow:
         self.image = pygame.transform.rotate(self.image, self.angle)
 
         self.rect = pygame.Rect(x, y, width, height)
-        self.stopped = False
+        self.born = pygame.time.get_ticks()
+
+        self.is_hit = False
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
@@ -34,8 +36,9 @@ class Arrow:
         self.rect.x = self.x
         self.rect.y = self.y
 
-        if self.rect.colliderect(self.target.rect):
+        if self.rect.colliderect(self.target.rect) and not self.is_hit:
             self.target.take_damage(10)
+            self.is_hit = True
 
-
-
+    def is_dead(self):
+        return pygame.time.get_ticks() - self.born > 1000

@@ -32,7 +32,7 @@ class Player:
         self.last_dx = 0
         self.last_dy = 0
         # Range attack
-        self.arrows = []
+        self.arrows = set()
         self.range_attack_start = 0
         self.range_attack_cooldown = 500
 
@@ -57,12 +57,12 @@ class Player:
             distance = self.distance_to(target)
             if distance <= self.attack_range:
                 print("Attacking")
-                   # Adjust the damage value as needed
+                target.take_damage(self.melee_damage)  # Adjust the damage value as needed
 
     def ranged_attack(self, target):
         current_time = pygame.time.get_ticks()
         if current_time - self.range_attack_start >= self.range_attack_cooldown:
-            self.arrows.append(Arrow(self.x, self.y, target))
+            self.arrows.add(Arrow(self.x, self.y, target))
 
     def dash(self):
         current_time = pygame.time.get_ticks()
@@ -95,8 +95,10 @@ class Player:
     def update(self):
         current_time = pygame.time.get_ticks()
 
-        for arrow in self.arrows:
+        for arrow in set(self.arrows):  # Итерация по копии множества
             arrow.update()
+            if arrow.is_dead() or arrow.is_hit:
+                self.arrows.discard(arrow)
 
         if self.state == DYING:
             # if current_time - self.death_time > self.framerate:
